@@ -1,7 +1,7 @@
 class Visit < ApplicationRecord 
   
   def self.record_visit!(user, shortened_url)
-    Visit.new(user_id: :user_id, url_id: :url_id)
+    Visit.create!(user_id: :user_id, url_id: :url_id)
   end
   
   belongs_to :visitors,

@@ -5,7 +5,7 @@ class ShortenedUrl < ApplicationRecord
     until !ShortenedUrl.exists?(short_url)
       short_url = SecureRandom::urlsafe_base64(16)
     end
-    ShortenedUrl.new(long_url: long_url, short_url: short_url, user_id: user.id)
+    ShortenedUrl.create!(long_url: long_url, short_url: short_url, user_id: user.id)
   end
   
   def num_clicks
@@ -17,6 +17,7 @@ class ShortenedUrl < ApplicationRecord
   end 
   
   def num_recent_uniques 
+    visits.select(:user_id).distinct.where( {created_at: (Time.now - 10*60)})
   end 
   
   belongs_to :submitter,
